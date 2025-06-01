@@ -30,16 +30,20 @@ module SubnauticalIntrusion
         @scale = (window.width.to_f / DESIGN_RESOLUTION_WIDTH)
 
         @land = get_image("#{ROOT_PATH}/media/land.png")
+        @land_blob = @land.to_blob
+
+        pp @land_blob.class
 
         @entities = [
-          SonarEntity.new(x: 128, y: 128 + 0, z: 0, sprite: get_image("#{ROOT_PATH}/media/ships/aircraft_carrier.png", retro: true), color: Gosu::Color::RED),
-          SonarEntity.new(x: 128, y: 128 + 32, z: 0, sprite: get_image("#{ROOT_PATH}/media/ships/battleship.png", retro: true), color: Gosu::Color::RED),
-          SonarEntity.new(x: 128, y: 128 + 64, z: 0, sprite: get_image("#{ROOT_PATH}/media/ships/cruiser.png", retro: true), color: Gosu::Color::RED),
-          SonarEntity.new(x: 128, y: 128 + 96, z: 0, sprite: get_image("#{ROOT_PATH}/media/ships/patrol_boat.png", retro: true), color: Gosu::Color::RED),
+          # SonarEntity.new(x: 128, y: 128 + 0, z: 0, sprite: get_image("#{ROOT_PATH}/media/ships/aircraft_carrier.png", retro: true), color: Gosu::Color::RED),
+          # SonarEntity.new(x: 128, y: 128 + 32, z: 0, sprite: get_image("#{ROOT_PATH}/media/ships/battleship.png", retro: true), color: Gosu::Color::RED),
+          # SonarEntity.new(x: 128, y: 128 + 64, z: 0, sprite: get_image("#{ROOT_PATH}/media/ships/cruiser.png", retro: true), color: Gosu::Color::RED),
+          # SonarEntity.new(x: 128, y: 128 + 96, z: 0, sprite: get_image("#{ROOT_PATH}/media/ships/patrol_boat.png", retro: true), color: Gosu::Color::RED),
 
           @submarine = PlayerEntity.new(x: 32, y: 96, z: 0, sprite: get_image("#{ROOT_PATH}/media/ships/submarine.png", retro: true), color: Gosu::Color::GREEN, drag: 0.99, speed: 1, radius: 8)
         ]
 
+        # Spawn blockade of open ocean
         ships = %w[patrol_boat battleship cruiser]
         (24 - 9).times do |i|
           @entities << SonarEntity.new(x: 272 + (32 * i * 3), y: 1968, z: 0, sprite: get_image("#{ROOT_PATH}/media/ships/#{ships[i % ships.size]}.png", retro: true), color: Gosu::Color::RED)
@@ -89,7 +93,7 @@ module SubnauticalIntrusion
         # @offset.x = 0 if @offset.x < 0
         # @offset.x = @land.width if @offset.x > @land.width
 
-        @label.value = "SCALE: #{@scale}, OFFSET X: #{@offset.x.round(1)}, OFFSET Y: #{@offset.y.round(1)}\n\nPOSITION X: #{@submarine.position.x.round(1)}, POSITION Y: #{@submarine.position.y.round(1)}"
+        @label.value = "SCALE: #{@scale}, OFFSET X: #{@offset.x.round(1)}, OFFSET Y: #{@offset.y.round(1)}\n\nPOSITION X: #{@submarine.position.x.round(1)}, POSITION Y: #{@submarine.position.y.round(1)}, BEACHED? #{entity_vs_land(@submarine)}"
       end
 
       def physics(dt, input)
@@ -128,6 +132,31 @@ module SubnauticalIntrusion
       def center_around(entity, lag = CyberarmEngine::Vector.new(0.9, 0.9))
         @offset.x += ((entity.position.x - window.width  / 2) - @offset.x) * (1.0 - lag.x)
         @offset.y += ((entity.position.y - window.height / 2) - @offset.y) * (1.0 - lag.y)
+      end
+
+      def entity_vs_land(entity)
+        # If out of bounds then beach the vessel and run.
+        return true if entity.position.x < 0
+        return true if entity.position.y < 0
+        return true if entity.position.x > @land.width
+        return true if entity.position.y > @land.height
+
+        stride = 4
+
+        index = (entity.position.x.floor * stride) + @land.width * (entity.position.y.floor * stride)
+        return true if index.negative? # Out of bounds
+
+        rgba_pixel = @land_blob[index...(index + stride)]
+
+        chars = rgba_pixel.chars
+
+        # Something must have gone horribly wrong, beach the vessel and run!
+        return true unless chars.size == stride
+        # raise "What?" unless chars.size == stride
+
+        # pp [index, chars]
+
+        chars[3].bytes.first > 0
       end
     end
   end

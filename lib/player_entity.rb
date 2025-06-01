@@ -5,7 +5,6 @@ module SubnauticalIntrusion
     def initialize(**args)
       super
 
-      pp args
       @radius = args[:radius]
     end
 
