@@ -2,12 +2,6 @@ module SubnauticalIntrusion
   class PlayerEntity < Entity
     attr_reader :radius
 
-    def initialize(**args)
-      super
-
-      @radius = args[:radius]
-    end
-
     def draw
       super
 
