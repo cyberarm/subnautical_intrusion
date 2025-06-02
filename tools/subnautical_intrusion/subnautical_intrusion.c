@@ -6,6 +6,7 @@
 #endif
 
 #include <stdlib.h>
+#include <windows.h>
 
 int main(int argc, char **argv)
 {
@@ -24,4 +25,10 @@ int main(int argc, char **argv)
   mrb_close(mrb);
 
   return 0;
+}
+
+// 💔 //
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+  return main(0, "");
 }
