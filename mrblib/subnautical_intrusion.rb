@@ -1,5 +1,4 @@
 module SubnauticalIntrusion
-  ROOT_PATH = File.expand_path("../..", __FILE__)
   DESIGN_RESOLUTION_WIDTH = 1024
   DEBUG_MODE = RUBY_ENGINE == "mruby" ? false : ARGV.join.include?("--debug")
 end
