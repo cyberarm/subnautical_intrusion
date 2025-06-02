@@ -11,6 +11,8 @@ module SubnauticalIntrusion
       RIGHT_KEYS = [Gosu::KB_D, Gosu::KB_RIGHT, Gosu::GP_RIGHT]
 
       def setup
+        self.show_cursor = DEBUG_MODE
+
         @original_entities = []
 
         @inputs = []
@@ -209,7 +211,7 @@ module SubnauticalIntrusion
         @scale = (window.width.to_f / DESIGN_RESOLUTION_WIDTH)
 
         input = Input.new
-        input.up  = UP_KEYS.any?  { |key| Gosu.button_down?(key) }
+        input.up    = UP_KEYS.any?    { |key| Gosu.button_down?(key) }
         input.down  = DOWN_KEYS.any?  { |key| Gosu.button_down?(key) }
         input.left  = LEFT_KEYS.any?  { |key| Gosu.button_down?(key) }
         input.right = RIGHT_KEYS.any? { |key| Gosu.button_down?(key) }
