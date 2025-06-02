@@ -243,6 +243,10 @@ module SubnauticalIntrusion
         elsif beached
           push_state(States::GameOver, reason: "Beached on Land")
         end
+
+        if @submarine.position.x >= 2000 && @submarine.position.y >= 192 && @submarine.position.y <= 496
+          push_state(States::GameWon, reason: "Escaped the Simulation")
+        end
       end
 
       def button_up(id)
@@ -313,6 +317,10 @@ module SubnauticalIntrusion
         # pp [index, chars]
 
         chars[3].bytes.first > 0
+      end
+
+      def simulation_time
+        @milliseconds
       end
     end
   end

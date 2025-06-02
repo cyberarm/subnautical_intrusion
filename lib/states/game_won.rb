@@ -6,11 +6,12 @@ module SubnauticalIntrusion
 
         theme(THEME)
 
-        flow(width: 1.0, height: 1.0, background: 0x88_222222) do
+        flow(width: 1.0, height: 1.0, background: 0x88_222222, padding: 64) do
           stack(width: 0.33)
-          stack(fill: true) do
+          stack(fill: true, height: 1.0) do
             banner "MISSION SUCCESS"
             tagline @options[:reason] || "Because reasons. :)"
+            caption "Took: #{((previous_state&.simulation_time).to_i / 1000.0)} seconds"
 
             button "REPLAY" do
               while(current_state)
@@ -19,6 +20,10 @@ module SubnauticalIntrusion
 
               push_state(States::Game)
             end
+
+            stack(fill: true)
+
+            button("EXIT") { close }
           end
           stack(width: 0.33)
         end
