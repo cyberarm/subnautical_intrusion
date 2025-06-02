@@ -1,5 +1,7 @@
 module SubnauticalIntrusion
   class SonarEntity < Entity
+    DEBUG_FONT = Gosu::Font.new(18)
+
     def initialize(**args)
       super
 
@@ -24,6 +26,7 @@ module SubnauticalIntrusion
 
       @patrol_nodes.each_with_index do |node, i|
         Gosu.draw_circle(node.x, node.y, 4, 36, i == @patrol_node_index ? Gosu::Color::GREEN : Gosu::Color::GRAY)
+        DEBUG_FONT.draw_text(i, node.x, node.y, 100, 1, 1, Gosu::Color::BLACK)
       end
     end
 

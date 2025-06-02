@@ -37,6 +37,7 @@ module SubnauticalIntrusion
         ]
 
         # Spawn patrolling ships
+        ### Patrolling Bean Island
         @entities << SonarEntity.new(x: 848, y: 1520, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/battleship.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
           CyberarmEngine::Vector.new(848, 1520),
           CyberarmEngine::Vector.new(936, 1416),
@@ -47,6 +48,105 @@ module SubnauticalIntrusion
           CyberarmEngine::Vector.new(648, 1576),
           CyberarmEngine::Vector.new(776, 1576)
         ])
+        @entities << SonarEntity.new(x: 936, y: 1416, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/patrol_boat.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(936, 1416),
+          CyberarmEngine::Vector.new(872, 1320),
+          CyberarmEngine::Vector.new(744, 1352),
+          CyberarmEngine::Vector.new(648, 1448),
+          CyberarmEngine::Vector.new(616, 1512),
+          CyberarmEngine::Vector.new(648, 1576),
+          CyberarmEngine::Vector.new(776, 1576),
+          CyberarmEngine::Vector.new(848, 1520),
+        ])
+
+        ### Patrolling Peanut Island
+        @entities << SonarEntity.new(x: 872, y: 776, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/patrol_boat.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(872, 776),
+          CyberarmEngine::Vector.new(968, 744),
+          CyberarmEngine::Vector.new(1000, 648),
+          CyberarmEngine::Vector.new(1000, 584),
+          CyberarmEngine::Vector.new(936, 552),
+          CyberarmEngine::Vector.new(808, 616),
+          CyberarmEngine::Vector.new(680, 680),
+          CyberarmEngine::Vector.new(616, 712),
+          CyberarmEngine::Vector.new(584, 776),
+          CyberarmEngine::Vector.new(584, 840),
+          CyberarmEngine::Vector.new(648, 904),
+          CyberarmEngine::Vector.new(744, 904),
+          CyberarmEngine::Vector.new(840, 872),
+        ])
+        @entities << SonarEntity.new(x: 968, y: 744, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/cruiser.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(968, 744),
+          CyberarmEngine::Vector.new(1000, 648),
+          CyberarmEngine::Vector.new(1000, 584),
+          CyberarmEngine::Vector.new(936, 552),
+          CyberarmEngine::Vector.new(808, 616),
+          CyberarmEngine::Vector.new(680, 680),
+          CyberarmEngine::Vector.new(616, 712),
+          CyberarmEngine::Vector.new(584, 776),
+          CyberarmEngine::Vector.new(584, 840),
+          CyberarmEngine::Vector.new(648, 904),
+          CyberarmEngine::Vector.new(744, 904),
+          CyberarmEngine::Vector.new(840, 872),
+          CyberarmEngine::Vector.new(872, 776),
+        ])
+
+        ### Carrier Group
+        @entities << SonarEntity.new(x: 1480, y: 680, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/aircraft_carrier.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(1480, 680),
+          CyberarmEngine::Vector.new(1544, 808),
+          CyberarmEngine::Vector.new(1032, 1000),
+          CyberarmEngine::Vector.new(488, 1160),
+          CyberarmEngine::Vector.new(360, 1096),
+          CyberarmEngine::Vector.new(328, 648),
+          CyberarmEngine::Vector.new(584, 456),
+          CyberarmEngine::Vector.new(1096, 360),
+          CyberarmEngine::Vector.new(1256, 584),
+        ])
+        @entities << SonarEntity.new(x: 1256, y: 584, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/battleship.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(1256, 584),
+          CyberarmEngine::Vector.new(1480, 680),
+          CyberarmEngine::Vector.new(1544, 808),
+          CyberarmEngine::Vector.new(1032, 1000),
+          CyberarmEngine::Vector.new(488, 1160),
+          CyberarmEngine::Vector.new(360, 1096),
+          CyberarmEngine::Vector.new(328, 648),
+          CyberarmEngine::Vector.new(584, 456),
+          CyberarmEngine::Vector.new(1096, 360),
+        ])
+        @entities << SonarEntity.new(x: 1544, y: 808, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/cruiser.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(1544, 808),
+          CyberarmEngine::Vector.new(1032, 1000),
+          CyberarmEngine::Vector.new(488, 1160),
+          CyberarmEngine::Vector.new(360, 1096),
+          CyberarmEngine::Vector.new(328, 648),
+          CyberarmEngine::Vector.new(584, 456),
+          CyberarmEngine::Vector.new(1096, 360),
+          CyberarmEngine::Vector.new(1256, 584),
+          CyberarmEngine::Vector.new(1480, 680),
+        ])
+
+        ### River Patrol
+        @entities << SonarEntity.new(x: 1584, y: 656, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/patrol_boat.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(1584, 656),
+          CyberarmEngine::Vector.new(1712, 624),
+          CyberarmEngine::Vector.new(1680, 848),
+          CyberarmEngine::Vector.new(1616, 848),
+          CyberarmEngine::Vector.new(1648, 752),
+        ])
+        @entities << SonarEntity.new(x: 1680, y: 848, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/patrol_boat.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(1680, 848),
+          CyberarmEngine::Vector.new(1616, 848),
+          CyberarmEngine::Vector.new(1648, 752),
+          CyberarmEngine::Vector.new(1584, 656),
+          CyberarmEngine::Vector.new(1712, 624),
+        ])
+
+        ### ----------------------------------- ###
+
+        # Spawn River Guardians
+        @entities << SonarEntity.new(x: 1488, y: 624, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/battleship.png", retro: true), color: Gosu::Color::RED)
+        @entities << SonarEntity.new(x: 1520, y: 912, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/battleship.png", retro: true), color: Gosu::Color::RED)
 
         # Spawn blockade of river
         @entities << SonarEntity.new(x: 304, y: 242 - 32, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/battleship.png", retro: true), color: Gosu::Color::RED)
