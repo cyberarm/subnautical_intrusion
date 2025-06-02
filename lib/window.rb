@@ -3,8 +3,7 @@ module SubnauticalIntrusion
     def setup
       self.caption = "Subnautical Intrusion v#{SubnauticalIntrusion::VERSION} (Gosu Game Jam 8 Entry)"
 
-      # push_state(States::MainMenu)
-      push_state(States::Game)
+      push_state(DEBUG_MODE ? States::Game : States::MainMenu)
     end
   end
 end

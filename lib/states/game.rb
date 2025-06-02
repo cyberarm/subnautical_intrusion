@@ -12,6 +12,7 @@ module SubnauticalIntrusion
 
       def setup
         self.show_cursor = DEBUG_MODE
+        theme(THEME)
 
         @original_entities = []
 
@@ -232,8 +233,23 @@ module SubnauticalIntrusion
 
           e.entity_in_sonar_range?(@submarine)
         end
+        # Beach on land
+        beached = entity_vs_land(@submarine)
 
-        @label.value = "SCALE: #{@scale}, OFFSET X: #{@offset.x.round(1)}, OFFSET Y: #{@offset.y.round(1)}\n\nPOSITION X: #{@submarine.position.x.round(1)}, POSITION Y: #{@submarine.position.y.round(1)}, BEACHED? #{entity_vs_land(@submarine)}, DETECTED? #{detected != nil}"
+        @label.value = "SCALE: #{@scale}, OFFSET X: #{@offset.x.round(1)}, OFFSET Y: #{@offset.y.round(1)}\n\nPOSITION X: #{@submarine.position.x.round(1)}, POSITION Y: #{@submarine.position.y.round(1)}, BEACHED? #{beached}, DETECTED? #{detected != nil}"
+
+        if detected
+          push_state(States::GameOver, reason: "Detected by Sonar")
+        elsif beached
+          push_state(States::GameOver, reason: "Beached on Land")
+        end
+      end
+
+      def button_up(id)
+        case id
+        when Gosu::KB_ESCAPE
+          push_state(States::GameOver, reason: "Simulation aborted by Trainee")
+        end
       end
 
       def physics(dt, input)
