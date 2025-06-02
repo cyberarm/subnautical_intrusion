@@ -1,6 +1,7 @@
 module SubnauticalIntrusion
   ROOT_PATH = File.expand_path("..", __FILE__)
   DESIGN_RESOLUTION_WIDTH = 1024
+  DEBUG_MODE = false
 end
 
 unless RUBY_ENGINE == "mruby"

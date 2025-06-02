@@ -24,6 +24,9 @@ module SubnauticalIntrusion
       @main_animator.instance_variable_set("@start_time", Gosu.milliseconds) if @main_animator.complete?
       @decay_animator.instance_variable_set("@start_time", Gosu.milliseconds + 500) if @decay_animator.complete?
 
+
+      return unless DEBUG_MODE
+
       @patrol_nodes.each_with_index do |node, i|
         Gosu.draw_circle(node.x, node.y, 4, 36, i == @patrol_node_index ? Gosu::Color::GREEN : Gosu::Color::GRAY)
         DEBUG_FONT.draw_text(i, node.x, node.y, 100, 1, 1, Gosu::Color::BLACK)

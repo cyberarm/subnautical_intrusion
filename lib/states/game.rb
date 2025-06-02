@@ -142,6 +142,26 @@ module SubnauticalIntrusion
           CyberarmEngine::Vector.new(1712, 624),
         ])
 
+        ### Lower Right Group
+        @entities << SonarEntity.new(x: 1520, y: 1840, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/patrol_boat.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(1520, 1840),
+          CyberarmEngine::Vector.new(1008, 1712),
+          CyberarmEngine::Vector.new(1136, 1360),
+          CyberarmEngine::Vector.new(1392, 1456),
+        ])
+        @entities << SonarEntity.new(x: 1136, y: 1360, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/patrol_boat.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(1136, 1360),
+          CyberarmEngine::Vector.new(1392, 1456),
+          CyberarmEngine::Vector.new(1520, 1840),
+          CyberarmEngine::Vector.new(1008, 1712),
+        ])
+        @entities << SonarEntity.new(x: 1008, y: 1712, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/patrol_boat.png", retro: true), color: Gosu::Color::RED, patrol_nodes: [
+          CyberarmEngine::Vector.new(1008, 1712),
+          CyberarmEngine::Vector.new(1136, 1360),
+          CyberarmEngine::Vector.new(1392, 1456),
+          CyberarmEngine::Vector.new(1520, 1840),
+        ])
+
         ### ----------------------------------- ###
 
         # Spawn River Guardians
@@ -162,7 +182,7 @@ module SubnauticalIntrusion
           @entities << SonarEntity.new(x: 272 + 32 + (32 * i * 3), y: 1968 - 64, z: 1, sprite: get_image("#{ROOT_PATH}/media/ships/#{ships[(i + 1) % ships.size]}.png", retro: true), color: Gosu::Color::RED)
         end
 
-        stack(width: 1.0, height: 1.0, padding: 8) do
+        stack(width: 1.0, height: 1.0, padding: 8, visible: DEBUG_MODE) do
           title "Hey, there. Got boat?", static: true
           @label = title "OFFSET X: -, OFFSET Y: -", static: true
         end
@@ -199,12 +219,19 @@ module SubnauticalIntrusion
         center_around(@submarine)
 
         # FIXME: Clamp offset such that the map is affixed to the edges of the screen
-        width_margin = [(window.width * @scale), @land.width].min - [(window.width * @scale), @land.width].max
-        pp [width_margin, width_margin * @scale, width_margin / @scale, width_margin / 2]
-        @offset.x = width_margin if @offset.x < width_margin
+        # width_margin = [(window.width * @scale), @land.width].min - [(window.width * @scale), @land.width].max
+        # pp [width_margin, width_margin * @scale, width_margin / @scale, width_margin / 2]
+        # @offset.x = width_margin if @offset.x < width_margin
         # @offset.x = @land.width if @offset.x > @land.width
 
-        @label.value = "SCALE: #{@scale}, OFFSET X: #{@offset.x.round(1)}, OFFSET Y: #{@offset.y.round(1)}\n\nPOSITION X: #{@submarine.position.x.round(1)}, POSITION Y: #{@submarine.position.y.round(1)}, BEACHED? #{entity_vs_land(@submarine)}"
+        # Detected by Sonar
+        detected = @entities.find do |e|
+          next if e == @submarine
+
+          e.entity_in_sonar_range?(@submarine)
+        end
+
+        @label.value = "SCALE: #{@scale}, OFFSET X: #{@offset.x.round(1)}, OFFSET Y: #{@offset.y.round(1)}\n\nPOSITION X: #{@submarine.position.x.round(1)}, POSITION Y: #{@submarine.position.y.round(1)}, BEACHED? #{entity_vs_land(@submarine)}, DETECTED? #{detected != nil}"
       end
 
       def physics(dt, input)
